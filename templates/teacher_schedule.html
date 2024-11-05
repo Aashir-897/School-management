@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Schedule for {{ teacher.first_name }} {{ teacher.last_name }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="time"] {
+            padding: 10px;
+            margin: 5px 0 15px;
+            width: calc(100% - 20px);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .delete-button {
+            background-color: #dc3545;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+        h3 {
+            margin-top: 20px;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>School Management System</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'login_teacher' %}">Teacher Login</a></li>
+            <li><a href="{% url 'login_student' %}">Student Login</a></li>
+            <li><a href="{% url 'login_parent' %}">Parent Login</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Teacher Schedule for {{ teacher.first_name }} {{ teacher.last_name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label for="day">Day:</label>
+        <input type="text" name="day" required>
+
+        <label for="start_time">Start Time:</label>
+        <input type="time" name="start_time" required>
+
+        <label for="end_time">End Time:</label>
+        <input type="time" name="end_time" required>
+
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" required>
+
+        <button type="submit">Save Schedule</button>
+    </form>
+
+    <h3>Current Schedule</h3>
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Subject</th>
+            <th>Action</th>
+        </tr>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.day }}</td>
+            <td>{{ schedule.start_time }}</td>
+            <td>{{ schedule.end_time }}</td>
+            <td>{{ schedule.subject }}</td>
+            <td>
+                <form method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="schedule_id" value="{{ schedule.id }}">
+                    <button type="submit" class="delete-button" name="delete">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'home' %}" class="logout-btn">Log out</a>
+</main>
+
+</body>
+</html>
