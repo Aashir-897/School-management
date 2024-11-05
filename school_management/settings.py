@@ -27,9 +27,11 @@ SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['your-vercel-app-url.vercel.app']  # Replace with your Vercel app URL
+
 
 
 # Application definition
@@ -137,3 +139,7 @@ AUTHENTICATION_BACKENDS = [
     'home.backends.StudentBackend',  # Custom backend for student login
     'django.contrib.auth.backends.ModelBackend',  # Default backend for admin login
 ]
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Create this directory for collected static files
