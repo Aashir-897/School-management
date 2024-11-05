@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login</title>
+    <style>
+        body {
+            background-image: url('https://media.istockphoto.com/id/1259416320/photo/group-of-business-people-meeting-in-a-seminar-conference.jpg?s=612x612&w=0&k=20&c=-QSSDyOHBIFh7FjAQqCvle2p49sJSySxiCg4-kHR8aY='); 
+            background-size: cover;
+            background-position: center; 
+            font-family: Arial, sans-serif; 
+            height: 100vh;
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            padding: 0 10px; 
+        }
+
+        .container {
+            width: 100%; 
+            max-width: 400px; 
+            margin: auto; 
+            transform: translateY(-30px); 
+            animation: fadeIn 0.5s ease-in; 
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0; 
+            }
+            to {
+                opacity: 1; 
+            }
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 2.5rem; 
+            border-radius: 1rem; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center; 
+            color: #343a40; 
+            margin-bottom: 1.5rem; 
+        }
+
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block; 
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .form-control {
+            border: 1px solid #ced4da; 
+            border-radius: 0.25rem; 
+            padding: 0.75rem; 
+            width: 100%; 
+            transition: border-color 0.2s; 
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #007bff; 
+            border: none; 
+            color: white; 
+            padding: 0.75rem; 
+            border-radius: 0.25rem; 
+            width: 100%; 
+            cursor: pointer; 
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; 
+        }
+
+        .text-muted {
+            text-align: center;
+            color: #6c757d; 
+            margin-top: 1rem; 
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 2rem; 
+            }
+
+            h1 {
+                font-size: 1.5rem; 
+            }
+
+            .btn-primary {
+                padding: 0.5rem; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.25rem; 
+            }
+
+            .form-control {
+                padding: 0.5rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <form method="POST" action="{% url 'login_teacher' %}">
+            {% csrf_token %}
+            <h1>Teachers Portal</h1>
+            
+            <!-- Email Field -->
+            <div class="form-floating">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" aria-label="Email" required>
+            </div>
+            
+            <!-- Password Field -->
+            <div class="form-floating">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" aria-label="Password" required>
+            </div>
+            
+            <button class="btn-primary" type="submit">Log In</button>
+            <p class="text-muted">&copy; 2024 My Company</p>
+
+            {% if error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+        </form>
+
+        <div style="text-align: center;">
+            <a href="{% url 'home' %}" style="color: #007bff;">Back to Home</a>
+        </div>
+    </div>
+
+</body>
+</html>

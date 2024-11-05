@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Results</title>
+
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Student Results</h1>
+
+        <h2 class="text-primary">Student Information</h2>
+        <div class="mb-4">
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+            <p><strong>Class:</strong> {{ student.student_class }}</p>
+        </div>
+
+        <h2 class="text-primary">Test Results</h2>
+        <div id="accordion">
+            {% for month_year, results in results_by_month %}
+                <div class="card">
+                    <div class="card-header" id="heading{{ forloop.counter }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                {{ month_year }}
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{ forloop.counter }}" class="collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mt-3">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th scope="col">Subject</th>
+                                            <th scope="col">Result</th>
+                                            <th scope="col">Exam Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for result in results %}
+                                            <tr>
+                                                <td>{{ result.subject_name }}</td>
+                                                <td>{{ result.result }}</td>
+                                                <td>{{ result.exam_date }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="logout-btn">Log out</a>
+
+    <!-- Bootstrap JS and dependencies (for interactive components) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

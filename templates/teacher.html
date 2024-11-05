@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+            margin-bottom: 20px;
+        }
+        .status-active {
+            color: green;
+            font-weight: bold;
+        }
+        .status-inactive {
+            color: red;
+            font-weight: bold;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome, {{ teacher.first_name }} {{ teacher.last_name }}!</h1>
+            <p>Your gateway to manage your classes and students.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Your Profile</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Email:</strong> {{ teacher.email }}</li>
+                    <li class="list-group-item"><strong>Phone Number:</strong> {{ teacher.phone_number }}</li>
+                    <li class="list-group-item"><strong>Subject:</strong> {{ teacher.subject }}</li>
+                    <li class="list-group-item"><strong>Department:</strong> {{ teacher.department }}</li>
+                    <li class="list-group-item"><strong>Hire Date:</strong> {{ teacher.hire_date }}</li>
+                    <li class="list-group-item"><strong>Salary:</strong> ${{ teacher.salary }}</li>
+                    <li class="list-group-item">
+                        <strong>Status:</strong>
+                        {% if teacher.is_active %}
+                            <span class="status-active">Active</span>
+                        {% else %}
+                            <span class="status-inactive">Inactive</span>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="{% url 'logout' %}" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="{% url 'teacher_schedule' teacher.id %}" class="btn btn-danger"><i class="fas fa-calendar-alt"></i> Schedule</a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 Imaginary Schooling System. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log('Welcome to the Teacher Dashboard!');
+        });
+    </script>
+</body>
+</html>

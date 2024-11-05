@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard - Child's Records</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .logout-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Parent Dashboard</h1>
+        
+        <form method="POST" action="{% url 'parents' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="roll_number">Enter Your Child's Roll Number:</label>
+                <input type="text" class="form-control" id="roll_number" name="roll_number" placeholder="Child's Roll Number" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+
+        {% if student %}
+            <h2 class="mt-4">Records for {{ student.name }}</h2>
+
+            <div class="mt-4">
+                <h3>Attendance Records</h3>
+                {% for month, records in attendance_records %}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#attendance_{{ forloop.counter }}">
+                        {{ month }} 
+                    </button>
+                    <div id="attendance_{{ forloop.counter }}" class="collapse">
+                        <table class="table table-bordered table-striped mt-2">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in records %}
+                                    <tr>
+                                        <td>{{ record.date }}</td>
+                                        <td>{{ record.present|yesno:"Present,Absent" }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="mt-4">
+                <h3>Test Results</h3>
+                {% for month, results in test_results %}
+                    <button class="btn btn-info" data-toggle="collapse" data-target="#results_{{ forloop.counter }}">
+                        {{ month }} 
+                    </button>
+                    <div id="results_{{ forloop.counter }}" class="collapse">
+                        <table class="table table-bordered table-striped mt-2">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Result</th>
+                                    <th>Exam Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for result in results %}
+                                    <tr>
+                                        <td>{{ result.subject_name }}</td>
+                                        <td>{{ result.result }}</td>
+                                        <td>{{ result.exam_date }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'home' %}" class="logout-btn">Log out</a>
+        {% elif error %}
+            <div class="alert alert-danger mt-4">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
