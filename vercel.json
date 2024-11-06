@@ -23,6 +23,6 @@
     }
   ],
   "env": {
-    "DEBUG": "false" 
+    "DEBUG": "false"
   }
 }
