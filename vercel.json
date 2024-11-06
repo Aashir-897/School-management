@@ -1,8 +1,28 @@
 {
   "builds": [
-      { "src": "school_management/wsgi.py", "use": "@vercel/python" }
+    {
+      "src": "manage.py",
+      "use": "@vercel/python",
+      "config": {
+        "buildCommand": "python3 manage.py collectstatic --noinput && python3 manage.py migrate --noinput"
+      }
+    },
+    {
+      "src": "school_management/wsgi.py",
+      "use": "@vercel/python"
+    }
   ],
   "routes": [
-      { "src": "/(.*)", "dest": "school_management/wsgi.py" }
-  ]
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "school_management/wsgi.py"
+    }
+  ],
+  "env": {
+    "DEBUG": "false" 
+  }
 }
