@@ -23,6 +23,8 @@
     }
   ],
   "env": {
-    "DEBUG": "false"
+    "DEBUG": "false",
+    "DATABASE_URL": "your_database_url",
+    "DJANGO_SECRET_KEY": "django-insecure-%@3c)!&kj)eg0x1-die-j6#pco8072j12w=@$r5h(w6t6bn+%8"
   }
 }

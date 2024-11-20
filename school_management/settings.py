@@ -10,14 +10,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = False
 
-
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     'school-management-ljkiasq69-aashirs-projects-dc503f8c.vercel.app',
     'school-management-sepia.vercel.app',
     '.vercel.app',
+    '.ngrok-free.app',  # Allows any Ngrok subdomain
 ]
+
 
 # Installed applications and middleware
 INSTALLED_APPS = [
@@ -62,14 +63,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'school_management.wsgi.application'
-
-# Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'school_management',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 # Password validators
 AUTH_PASSWORD_VALIDATORS = [
@@ -111,11 +115,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-import os
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Ensure this path is correct
-    }
-}
+
+
 

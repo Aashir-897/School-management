@@ -23,7 +23,7 @@ admin.site.index_title= 'Imaginary Schooling System Administration'
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('m.y.a.p.p/', admin.site.urls),
     path('', include('home.urls')),
 ]
 
